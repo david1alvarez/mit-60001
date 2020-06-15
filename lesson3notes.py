@@ -35,7 +35,7 @@ for var in range(4):
 
 s = "abcdefgh"
 
-# the following does the exact same thing, but the bottom way is more "pythony"
+# the following does the exact same thing, but the bottom way is more "pythonic"
 for index in range(len(s)):
     if s[index] == 'i' or s[index] == 'u':
         print("there is an i or u")
@@ -43,3 +43,29 @@ for index in range(len(s)):
 for char in s:
     if char == 'i' or char == 'u':
         print("there is an i or u")
+
+
+''' guess and check methods of finding a solution to a problem only work if you are
+    confident that one of the guessed values will be a correct solution. If there is a 
+    chance that it might not be, then its a pretty bad solution.
+'''
+
+''' getting the approximate solution to something is very similar to the guess and check
+    method, but instead you have a small step size and an "acceptable range". If your guessed 
+    value puts you within the acceptable range, then you stop.
+'''
+
+''' for a bisection search (also called a binary search algorithm), initialize a high boundary and a
+    low boundary. Your guess should always e equal to halfway between the high and low boundary. If 
+    the result is above your target, then set the high boundary equal to your guess. If the result
+    is below your target, then set the low boundary equal to your guess. Keep narrowing the bands by 
+    walking in the upper and lower bounds until you make a guess that is within an acceptable margin.
+
+    the search space is:
+    - first guess: n/2
+    - second guess: n/4
+    - kth guess: n/(2^k)
+    
+    time complexity is O(log n)
+    space complexity is O(1)
+'''
