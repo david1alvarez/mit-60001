@@ -1,6 +1,7 @@
 starting_salary = float(input("Enter the starting salary: "))
 
 def savings(salary, saving_percent, months_saved):
+    """calculate the savings from the salary, percent saved, and months saved."""
     current_savings = 0
     r = 0.04
     months = 0
