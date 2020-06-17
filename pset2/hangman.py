@@ -12,7 +12,7 @@
 import random
 import string
 
-WORDLIST_FILENAME = "words.txt"
+WORDLIST_FILENAME = "pset2/words.txt"
 
 
 def load_words():
@@ -60,8 +60,11 @@ def is_word_guessed(secret_word, letters_guessed):
     returns: boolean, True if all the letters of secret_word are in letters_guessed;
       False otherwise
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+
+    for char in secret_word:
+      if char not in letters_guessed:
+        return False
+    return True
 
 
 
@@ -72,8 +75,13 @@ def get_guessed_word(secret_word, letters_guessed):
     returns: string, comprised of letters, underscores (_), and spaces that represents
       which letters in secret_word have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    ret_string = ''
+    for char in secret_word:
+      if char not in letters_guessed:
+        ret_string += '_ '
+      else:
+        ret_string += char+' '
+    return ret_string
 
 
 
@@ -83,9 +91,16 @@ def get_available_letters(letters_guessed):
     returns: string (of letters), comprised of letters that represents which letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
-    
+
+    letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z']
+    ret_string = ''
+
+    for char in letters:
+      if char not in letters_guessed:
+        ret_string += char
+
+    return ret_string
+
     
 
 def hangman(secret_word):
@@ -113,8 +128,62 @@ def hangman(secret_word):
     
     Follows the other limitations detailed in the problem write-up.
     '''
-    # FILL IN YOUR CODE HERE AND DELETE "pass"
-    pass
+    guesses = 6
+    guessed_letters = ''
+    print("Welcome to the game Hangman!")
+    print("I am thinking of a word that is", len(secret_word), "letters long")
+    return guess_word(secret_word, guesses, guessed_letters)
+
+
+def guess_word(secret_word, guesses_remaining, guessed_letters):
+  """ Inputs: secret_word is hidden from the user,
+      guesses_remaining is the number of guesses left to the user,
+      guessed_letters are the letters that the user has guessed so far.
+      The function shows the user the hidden word and prompts them for their guess.
+      When the user guesses the word or has used all of their guesses, the function
+      ends and the user is shown the result.
+  """
+
+  # end the program if the user has used up their guesses
+  if guesses_remaining <= 0:
+    print("Sorry! You ran out of guesses. The word was", secret_word)
+    return None
+
+  print("You have", guesses_remaining, "guesses remaining")
+  # ask user for input and validate
+  print("Hint:", get_guessed_word(secret_word, guessed_letters))
+  if guessed_letters != '':
+    print("your guesses so far are: "+guessed_letters+". The remaining letters are: "+get_available_letters(guessed_letters))
+
+  guess = get_input(guessed_letters)
+  if guess not in secret_word:
+    guesses_remaining -= 1
+
+  guessed_letters += guess+' '
+  # guessed_letters += get_input(guessed_letters)+' '
+  # guesses_remaining -= 1
+  
+  if is_word_guessed(secret_word, guessed_letters):
+    print("Congratulations!", secret_word, "was the answer.")
+    return None
+  else:
+    guess_word(secret_word, guesses_remaining, guessed_letters)
+  
+  
+def get_input(guessed_letters):
+  guess = input("Please enter your guess: ").lower()
+  if guess in guessed_letters:
+    print("you already guessed "+guess+", please try again")
+    return get_input(guessed_letters)
+  elif len(guess) != 1:
+    print("please try again, entering only one letter for your guess")
+    return get_input(guessed_letters)
+  elif not guess.isalpha():
+    print("please only enter letters")
+    return get_input(guessed_letters)
+  else:
+    return guess
+
 
 
 
